@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B1ACE96D-83CC-499A-A4C6-1BA135B71027}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>ManageStock</RootNamespace>
+    <AssemblyName>ManageStock</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Converters\HistoryFilterToTextConverter.cs" />
+    <Compile Include="Converters\HistoryTypeQuantityConverter.cs" />
+    <Compile Include="Builder\ManageStockBuilder.cs" />
+    <Compile Include="Converters\StockActionToStringConverter.cs" />
+    <Compile Include="Export\DataExport.cs" />
+    <Compile Include="Export\DataExportResult.cs" />
+    <Compile Include="Export\DataExportValue.cs" />
+    <Compile Include="Export\EnumDataExportStatus.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Templates\FilterHistoryTemplateSelector.cs" />
+    <Compile Include="Templates\ViewModelTemplateSelector.cs" />
+    <Compile Include="Utilities\Exporter.cs" />
+    <Compile Include="ValidationsRules\PriceValidationRule.cs" />
+    <Compile Include="ViewModels\ArticleViewModel.cs" />
+    <Compile Include="ViewModels\CurrencyViewModel.cs" />
+    <Compile Include="ViewModels\HistoryViewModel.cs" />
+    <Compile Include="ViewModels\ProviderViewModel.cs" />
+    <Compile Include="Views\Articles\ArticlesMainView.xaml.cs">
+      <DependentUpon>ArticlesMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Articles\ArticleView.xaml.cs">
+      <DependentUpon>ArticleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Articles\Providers\AddArticleProviderWindow.xaml.cs">
+      <DependentUpon>AddArticleProviderWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Articles\Providers\ArticleProviderInformationWindow.xaml.cs">
+      <DependentUpon>ArticleProviderInformationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Articles\Stock\QuantitiyStockPopup.xaml.cs">
+      <DependentUpon>QuantitiyStockPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Articles\SubArticles\EditSubArticleWindow.xaml.cs">
+      <DependentUpon>EditSubArticleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Currency\CurrencyNamePopup.xaml.cs">
+      <DependentUpon>CurrencyNamePopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Currency\CurrencyView.xaml.cs">
+      <DependentUpon>CurrencyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\History\HistoryMainView.xaml.cs">
+      <DependentUpon>HistoryMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Providers\EditProviderWindow.xaml.cs">
+      <DependentUpon>EditProviderWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Providers\ProviderMainView.xaml.cs">
+      <DependentUpon>ProviderMainView.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Articles\ArticlesMainView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Articles\ArticleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Articles\Providers\AddArticleProviderWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Articles\Providers\ArticleProviderInformationWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Articles\Stock\QuantitiyStockPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Articles\SubArticles\EditSubArticleWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Currency\CurrencyNamePopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Currency\CurrencyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\History\HistoryMainView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Providers\EditProviderWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Providers\ProviderMainView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\exchange.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Application.Backup\Application.Backup.csproj">
+      <Project>{9c5a0e33-8e19-45d0-b931-4bf675947247}</Project>
+      <Name>Application.Backup</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Application.CommandManager\Application.CommandManager.csproj">
+      <Project>{45ddcf14-4672-4255-86e8-53557e564f57}</Project>
+      <Name>Application.CommandManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Application.Common\Application.Common.csproj">
+      <Project>{f9a3f964-3fb6-45dc-95ea-44ced524d0dd}</Project>
+      <Name>Application.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Application.Excel\Application.Excel.csproj">
+      <Project>{7a566240-b63d-4b42-99e1-a148ac7eb449}</Project>
+      <Name>Application.Excel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignColors">
+      <Version>2.0.9</Version>
+    </PackageReference>
+    <PackageReference Include="MaterialDesignExtensions">
+      <Version>3.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="MaterialDesignThemes">
+      <Version>4.6.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
+      <Version>1.1.39</Version>
+    </PackageReference>
+    <PackageReference Include="Notification.Wpf">
+      <Version>6.1.0.5</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\excel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\delete_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Interop.Access.Dao">
+      <Guid>{4AC9E1DA-5BAD-4AC7-86E3-24F4CDCECA28}</Guid>
+      <VersionMajor>12</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

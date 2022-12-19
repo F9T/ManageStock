@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F9A3F964-3FB6-45DC-95EA-44CED524D0DD}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>Application.Common</RootNamespace>
+    <AssemblyName>Application.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppManager\ApplicationManager.cs" />
+    <Compile Include="AppManager\EnumApplicationContext.cs" />
+    <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Controls\FilterableComboBox.cs" />
+    <Compile Include="Converters\InvertBooleanConverter.cs" />
+    <Compile Include="Converters\ArticleAssemblyTypeToBooleanConverter.cs" />
+    <Compile Include="CustomWindow.cs" />
+    <Compile Include="Helpers\DateTimeHelper.cs" />
+    <Compile Include="Helpers\TextBoxHelper.cs" />
+    <Compile Include="AppBuilderBase.cs" />
+    <Compile Include="LoadingInfo.cs" />
+    <Compile Include="Models\Articles\EnumArticleAssemblyType.cs" />
+    <Compile Include="Navigator\ItemNavigator.cs" />
+    <Compile Include="Logger\ApplicationLogger.cs" />
+    <Compile Include="Managers\DatabaseManager\ColumnResult.cs" />
+    <Compile Include="Managers\DatabaseManager\ColumnsList.cs" />
+    <Compile Include="Managers\DatabaseManager\Conditions\Condition.cs" />
+    <Compile Include="Managers\DatabaseManager\Conditions\ConditionBase.cs" />
+    <Compile Include="Managers\DatabaseManager\Conditions\ConditionGroup.cs" />
+    <Compile Include="Managers\DatabaseManager\Conditions\ConditionSeparator.cs" />
+    <Compile Include="Managers\DatabaseManager\Conditions\EnumConditionSeparator.cs" />
+    <Compile Include="Managers\DatabaseManager\DBManager.cs" />
+    <Compile Include="Managers\DatabaseManager\EnumDatabaseAction.cs" />
+    <Compile Include="Managers\DatabaseManager\RowResult.cs" />
+    <Compile Include="Managers\DatabaseManager\TypeHelper.cs" />
+    <Compile Include="Managers\DataManager.cs" />
+    <Compile Include="Models\Articles\Article.cs" />
+    <Compile Include="Models\Articles\EnumStockAction.cs" />
+    <Compile Include="Models\Devises\Currency.cs" />
+    <Compile Include="Models\Devises\ExchangeRate.cs" />
+    <Compile Include="Models\Groups\GroupArticle.cs" />
+    <Compile Include="Models\Groups\GroupBase.cs" />
+    <Compile Include="Models\Groups\GroupProvider.cs" />
+    <Compile Include="Models\History\History.cs" />
+    <Compile Include="Models\IDatabaseModel.cs" />
+    <Compile Include="Models\Items\ItemBase.cs" />
+    <Compile Include="Models\Providers\Provider.cs" />
+    <Compile Include="Navigator\NavigatorItemChangedEventArgs.cs" />
+    <Compile Include="Notifications\CustomNotificationsManager.cs" />
+    <Compile Include="PathConfiguration\EnumConfigurationPath.cs" />
+    <Compile Include="PathConfiguration\PathManager.cs" />
+    <Compile Include="PopupWindows\ConfirmationPopup.xaml.cs">
+      <DependentUpon>ConfirmationPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PopupWindows\EnumPopupResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings\SettingsBase.cs" />
+    <Compile Include="Settings\SettingsSerializer.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewRequestEventArgs.cs" />
+    <Compile Include="Views\EditArticleWindow.xaml.cs">
+      <DependentUpon>EditArticleWindow.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="PopupWindows\ConfirmationPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SettingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Controls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Fonts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EditArticleWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignColors">
+      <Version>2.0.9</Version>
+    </PackageReference>
+    <PackageReference Include="MaterialDesignExtensions">
+      <Version>3.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="MaterialDesignThemes">
+      <Version>4.6.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
+      <Version>1.1.39</Version>
+    </PackageReference>
+    <PackageReference Include="Notification.Wpf">
+      <Version>6.1.0.5</Version>
+    </PackageReference>
+    <PackageReference Include="System.Data.SQLite">
+      <Version>1.0.117</Version>
+    </PackageReference>
+    <PackageReference Include="System.ValueTuple">
+      <Version>4.5.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Application.CommandManager\Application.CommandManager.csproj">
+      <Project>{45ddcf14-4672-4255-86e8-53557e564f57}</Project>
+      <Name>Application.CommandManager</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

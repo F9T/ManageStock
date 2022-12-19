@@ -1,0 +1,74 @@
+﻿<common:CustomWindow x:Class="ManageStock.Views.Articles.Providers.ArticleProviderInformationWindow"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+              xmlns:common="clr-namespace:Application.Common;assembly=Application.Common" 
+              xmlns:devises="clr-namespace:Application.Common.Models.Devises;assembly=Application.Common"
+              mc:Ignorable="d" WindowStartupLocation="CenterOwner" Closing="ArticleProviderInformationWindowOnClosing"
+              Title="{Binding GroupProvider.Item.Name, StringFormat='{}Information du fournisseur - {0}'}" ResizeMode="NoResize" SizeToContent="Height" Width="850">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Firme : "/>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding GroupProvider.Item.Name}"/>
+        <TextBlock Grid.Row="0" Grid.Column="3" Text="No. client : "/>
+        <TextBlock Grid.Row="0" Grid.Column="4" Text="{Binding GroupProvider.Item.ClientNumber}"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Adresse : "/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding GroupProvider.Item.Address}"/>
+        <TextBlock Grid.Row="1" Grid.Column="3" Text="Pays : "/>
+        <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding GroupProvider.Item.Country}"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Localité : "/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding GroupProvider.Item.Locality}"/>
+        <TextBlock Grid.Row="2" Grid.Column="3" Text="NPA : "/>
+        <TextBlock Grid.Row="2" Grid.Column="4" Text="{Binding GroupProvider.Item.NPA}"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="E-mail : "/>
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding GroupProvider.Item.Mail}"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Prix HT : "/>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding GroupProvider.PriceHT, StringFormat=0.0}" Height="25"/>
+        <TextBlock Grid.Row="4" Grid.Column="3" Text="Prix transport : "/>
+        <TextBlock Grid.Row="4" Grid.Column="4" Text="{Binding GroupProvider.Item.PriceTransport, StringFormat=0.0}"/>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="N° Article : "/>
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding GroupProvider.ArticleNumber}" Height="25"/>
+
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Devise : "/>
+        <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Currencies}" SelectedItem="{Binding GroupProvider.Currency}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type devises:Currency}">
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Button Grid.Row="0" Grid.RowSpan="3" VerticalAlignment="Top" Grid.Column="5" Padding="0" Background="Transparent" Width="45" Height="45" Click="DeleteProviderButtonOnClick">
+            <Image Source="pack://application:,,/ManageStock;component/Images/delete.png" Width="32" Height="32"/>
+        </Button>
+
+        <StackPanel Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2" Margin="0,20,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
+            <Button Content="Annuler" Width="90" Click="CancelButtonOnClick"/>
+            <Button Content="Confirmer" Width="90" Click="ConfirmButtonOnClick" Margin="10,0,0,0"/>
+        </StackPanel>
+    </Grid>
+</common:CustomWindow>

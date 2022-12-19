@@ -1,0 +1,12 @@
+﻿<common:CustomWindow x:Class="Application.GUI.MainWindow"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:common="clr-namespace:Application.Common;assembly=Application.Common" 
+              xmlns:gui="clr-namespace:Application.GUI" 
+              Background="{StaticResource BackgroundColorBrush}" Foreground="Black"
+              Title="Manage stock" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+
+    <Grid>
+        <ContentControl Content="{Binding View, RelativeSource={RelativeSource AncestorType=gui:MainWindow}}"/>
+    </Grid>
+</common:CustomWindow>
