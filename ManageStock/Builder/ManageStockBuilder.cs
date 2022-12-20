@@ -29,6 +29,7 @@ namespace ManageStock.Builder
         public override void Launch(object[] _Args)
         {
             m_MainView = new MainView();
+            InitializePath();
 
             base.Launch(_Args);
 
@@ -46,7 +47,6 @@ namespace ManageStock.Builder
             m_MainView.NotificationManager = CustomNotificationsManager;
 
             InitializeLock();
-            InitializePath();
             InitializeViewModels();
         }
 
