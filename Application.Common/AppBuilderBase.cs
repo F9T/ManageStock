@@ -14,6 +14,8 @@ namespace Application.Common
 {
     public abstract class AppBuilderBase : IDisposable
     {
+        protected bool m_DatabaseIsOpened;
+
         protected CustomNotificationsManager CustomNotificationsManager { get; private set; }
 
         protected SettingsSerializer<Settings.Settings> SettingsSerializer { get; private set; }
@@ -72,13 +74,10 @@ namespace Application.Common
             PathManager.InstanceOf[EnumConfigurationPath.Database] = Settings.DatabasePath;
 
             // open database
-            bool isOpen = DBManager.InstanceOf.Open(Settings.DatabasePath);
-            if (!isOpen)
+            m_DatabaseIsOpened = DBManager.InstanceOf.Open(Managers.DatabaseManager.EnumDBConnectorType.SQLite, Settings.DatabasePath);
+            if (!m_DatabaseIsOpened)
             {
-                CustomNotificationsManager.Show("Impossible de se connecter à la base de données!", NotificationType.Error);
                 ApplicationLogger.InstanceOf.Write("InitializeDatabase() : Impossible de se connecter à la base de données!");
-                // Current.Shutdown(0);
-                return;
             }
         }
 

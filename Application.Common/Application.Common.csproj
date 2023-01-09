@@ -54,6 +54,7 @@
     <Compile Include="AppManager\EnumApplicationContext.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Controls\FilterableComboBox.cs" />
+    <Compile Include="Converters\CustomBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\InvertBooleanConverter.cs" />
     <Compile Include="Converters\ArticleAssemblyTypeToBooleanConverter.cs" />
     <Compile Include="CustomWindow.cs" />
@@ -61,6 +62,18 @@
     <Compile Include="Helpers\TextBoxHelper.cs" />
     <Compile Include="AppBuilderBase.cs" />
     <Compile Include="LoadingInfo.cs" />
+    <Compile Include="Managers\DatabaseManager\Conditions\DatabaseParameter.cs" />
+    <Compile Include="Helpers\DBParameterHelper.cs" />
+    <Compile Include="Managers\DatabaseManager\Connectors\DBConnectorBase.cs" />
+    <Compile Include="Managers\DatabaseManager\Connectors\MySQLConnector.cs" />
+    <Compile Include="Managers\DatabaseManager\Connectors\SQLiteConnector.cs" />
+    <Compile Include="Managers\DatabaseManager\Connectors\SQLServerConnector.cs" />
+    <Compile Include="Managers\DatabaseManager\EnumDBConnectorType.cs" />
+    <Compile Include="ManageStock.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ManageStock.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Models\Articles\EnumArticleAssemblyType.cs" />
     <Compile Include="Navigator\ItemNavigator.cs" />
     <Compile Include="Logger\ApplicationLogger.cs" />
@@ -124,6 +137,17 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="ManageStock.xsc">
+      <DependentUpon>ManageStock.xsd</DependentUpon>
+    </None>
+    <None Include="ManageStock.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ManageStock.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ManageStock.xss">
+      <DependentUpon>ManageStock.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -168,8 +192,14 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
       <Version>1.1.39</Version>
     </PackageReference>
+    <PackageReference Include="MySql.Data">
+      <Version>8.0.31</Version>
+    </PackageReference>
     <PackageReference Include="Notification.Wpf">
       <Version>6.1.0.5</Version>
+    </PackageReference>
+    <PackageReference Include="System.Data.SqlClient">
+      <Version>4.8.5</Version>
     </PackageReference>
     <PackageReference Include="System.Data.SQLite">
       <Version>1.0.117</Version>

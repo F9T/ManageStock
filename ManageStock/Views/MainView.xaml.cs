@@ -42,6 +42,8 @@ namespace ManageStock.Views
             DataContext = this;
         }
 
+        public bool IsDatabaseOpened { get; set; }
+
         public List<ViewModelBase> ViewModels { get; set; }
 
         public CommandManager CommandManager

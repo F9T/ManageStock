@@ -1,5 +1,6 @@
 ﻿using Application.Common.Settings;
 using Microsoft.Win32;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
@@ -32,6 +33,11 @@ namespace Application.Common
         {
             string initialDirectory = Path.GetDirectoryName(Settings.DatabasePath);
             string fileName = Path.GetFileName(Settings.DatabasePath);
+
+            if (!Directory.Exists(initialDirectory))
+            {
+                initialDirectory = Environment.GetEnvironmentVariable("USERPROFILE");
+            }
 
             OpenFileDialog dialog = new OpenFileDialog
             {

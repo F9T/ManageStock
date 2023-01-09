@@ -7,9 +7,11 @@
              xmlns:history="clr-namespace:ManageStock.Views.History"
              xmlns:currency="clr-namespace:ManageStock.Views.Currency"
              xmlns:common="clr-namespace:Application.Common.ViewModels;assembly=Application.Common" 
+             xmlns:converters="clr-namespace:Application.Common.Converters;assembly=Application.Common" 
              xmlns:templates="clr-namespace:ManageStock.Templates">
 
     <UserControl.Resources>
+        <converters:CustomBooleanToVisibilityConverter x:Key="InvertBooleanToVisibilityConverter" VisibilityOnTrue="Collapsed" VisibilityOnFalse="Visible"/>
 
         <DataTemplate x:Key="ArticlesTemplate">
             <materialDesign:TransitioningContent>
@@ -79,6 +81,12 @@
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </TabControl>
+
+        <Grid Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FFFFFFFF" Visibility="{Binding IsDatabaseOpened, Converter={StaticResource InvertBooleanToVisibilityConverter}}">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Impossible d'ouvrir la base de données." HorizontalAlignment="Center" FontSize="20" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Grid>
 
         <Grid Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#DDFFFFFF" Visibility="{Binding SelectedView.LoadingInfo.IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
             <StackPanel VerticalAlignment="Center">

@@ -126,6 +126,7 @@ namespace ManageStock.ViewModels
         public override void RequestView(IDatabaseModel _Item)
         {
             SelectedArticle = _Item as Article;
+            OnPropertyChanged(nameof(SelectedSubArticle));
         }
 
         private void GoToHistory()
@@ -306,12 +307,6 @@ namespace ManageStock.ViewModels
                     break;
                 case EnumArticleAssemblyType.ProductAtTheOutput:
                     {
-                        if (SelectedArticle.Quantity - _Quantity < 0)
-                        {
-                            NotifyWarning("Il n'y pas assez de quantité d'article.");
-                            return false;
-                        }
-
                         if (SelectedArticle.GroupArticles.Any(_GroupArticle => _GroupArticle.Item.Quantity - (_Quantity * _GroupArticle.QuantityUse) < 0))
                         {
                             NotifyWarning("Il n'y a pas assez de sous-articles.");
@@ -337,18 +332,35 @@ namespace ManageStock.ViewModels
                 case EnumArticleAssemblyType.ProductAtTheOutput:
                     {
                         // output
-                        SelectedArticle.Quantity -= _Quantity;
                         m_AddedHistories.Add(SelectedArticle, new List<History>());
                         m_AddedHistories[SelectedArticle].Add(new History() { ActionType = EnumStockAction.Output, ArticleID = SelectedArticle.ID, Quantity = _Quantity, Balance = SelectedArticle.Quantity });
-
-                        foreach (GroupArticle groupArticle in SelectedArticle.GroupArticles)
+                        
+                        if (SelectedArticle.GroupArticles.Count == 0)
                         {
-                            groupArticle.Item.Quantity -= _Quantity * groupArticle.QuantityUse;
-                            if (!m_AddedHistories.ContainsKey(groupArticle.Item))
+                            if(SelectedArticle.Quantity > 0)
                             {
-                                m_AddedHistories.Add(groupArticle.Item, new List<History>());
+                                if(SelectedArticle.Quantity - _Quantity < 0)
+                                {
+                                    SelectedArticle.Quantity = 0;
+                                }
+                                else
+                                {
+                                    SelectedArticle.Quantity -= _Quantity;
+                                }
                             }
-                            m_AddedHistories[groupArticle.Item].Add(new History() { ActionType = EnumStockAction.Output, ArticleID = groupArticle.ArticleId, Quantity = _Quantity * groupArticle.QuantityUse, Balance = groupArticle.Item.Quantity });
+                        }
+                        else
+                        {
+                            
+                            foreach (GroupArticle groupArticle in SelectedArticle.GroupArticles)
+                            {
+                                groupArticle.Item.Quantity -= _Quantity * groupArticle.QuantityUse;
+                                if (!m_AddedHistories.ContainsKey(groupArticle.Item))
+                                {
+                                    m_AddedHistories.Add(groupArticle.Item, new List<History>());
+                                }
+                                m_AddedHistories[groupArticle.Item].Add(new History() { ActionType = EnumStockAction.Output, ArticleID = groupArticle.ArticleId, Quantity = _Quantity * groupArticle.QuantityUse, Balance = groupArticle.Item.Quantity });
+                            }
                         }
                     }
                     break;

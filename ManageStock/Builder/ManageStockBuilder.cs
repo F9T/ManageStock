@@ -48,6 +48,8 @@ namespace ManageStock.Builder
 
             InitializeLock();
             InitializeViewModels();
+
+            m_MainView.IsDatabaseOpened = m_DatabaseIsOpened;
         }
 
         public override void Shutdown(int _ExitCode)

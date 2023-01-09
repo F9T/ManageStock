@@ -1,4 +1,4 @@
-﻿using System.Data.SQLite;
+﻿using Application.Common.Managers.DatabaseManager.Conditions;
 
 namespace Application.Common.Managers.DatabaseManagerBase.Conditions
 {
@@ -17,19 +17,14 @@ namespace Application.Common.Managers.DatabaseManagerBase.Conditions
 
         public object Value { get; }
 
-        public SQLiteParameter GetParameter()
+        public DatabaseParameter GetParameter()
         {
-            SQLiteParameter parameter = new SQLiteParameter(Value.GetType().ToDbType())
-            {
-                ParameterName = ColumnName,
-                Value = Value
-            };
-            return parameter;
+            return new DatabaseParameter(ColumnName, Value.GetType(), ColumnName, Value);
         }
 
         public override string ToString()
         {
-            return $"{ColumnName} {Operator} :{ColumnName}";
+            return $"{ColumnName} {Operator} @{ColumnName}";
         }
     }
 }

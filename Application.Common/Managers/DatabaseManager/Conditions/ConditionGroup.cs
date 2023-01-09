@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Data.SQLite;
+﻿using Application.Common.Managers.DatabaseManager.Conditions;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Application.Common.Managers.DatabaseManagerBase.Conditions
@@ -13,9 +13,9 @@ namespace Application.Common.Managers.DatabaseManagerBase.Conditions
 
         public List<ConditionBase> Conditions { get; set; }
 
-        public List<SQLiteParameter> GetParameters()
+        public List<DatabaseParameter> GetParameters()
         {
-            List<SQLiteParameter> parameters = new List<SQLiteParameter>();
+            List<DatabaseParameter> parameters = new List<DatabaseParameter>();
             foreach (ConditionBase conditionBase in Conditions)
             {
                 if (conditionBase is Condition condition)
@@ -30,7 +30,7 @@ namespace Application.Common.Managers.DatabaseManagerBase.Conditions
 
             return parameters;
         }
-        
+
         public override string ToString()
         {
             StringBuilder query = new StringBuilder("(");
@@ -42,7 +42,7 @@ namespace Application.Common.Managers.DatabaseManagerBase.Conditions
                 if (index + 1 < Conditions.Count)
                     query.Append(" ");
             }
-            
+
             query.Append(")");
             return query.ToString();
         }
