@@ -20,7 +20,7 @@ DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputDir=Output
-OutputBaseFilename=ManageStock
+OutputBaseFilename=ManageStock_Installer
 SetupIconFile=..\Application.GUI\AppIcon.ico
 Compression=lzma
 SolidCompression=yes
