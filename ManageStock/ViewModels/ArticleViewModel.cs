@@ -1,5 +1,6 @@
 ﻿using Application.CommandManager;
 using Application.CommandManager.Collection;
+using Application.CommandManager.Commands;
 using Application.Common;
 using Application.Common.Commands;
 using Application.Common.Managers;
@@ -126,7 +127,14 @@ namespace ManageStock.ViewModels
         public override void RequestView(IDatabaseModel _Item)
         {
             SelectedArticle = _Item as Article;
-            OnPropertyChanged(nameof(SelectedSubArticle));
+            if(SelectedArticle != null)
+            {
+                // clear filter if not in find article
+                if(!InFilter(SelectedArticle, SearchText))
+                {
+                    SearchText = "";
+                }
+            }
         }
 
         private void GoToHistory()
@@ -152,11 +160,16 @@ namespace ManageStock.ViewModels
             {
                 if (_Item is Article article)
                 {
-                    return article.Number.ToLower().Contains(SearchText.ToLower());
+                    return InFilter(article, SearchText);
                 }
 
                 return false;
             };
+        }
+
+        private bool InFilter(Article _Article, string _Text)
+        {
+            return _Article.Number.ToLower().Contains(_Text.ToLower());
         }
 
         private void AddArticleProvider()
@@ -333,7 +346,6 @@ namespace ManageStock.ViewModels
                     {
                         // output
                         m_AddedHistories.Add(SelectedArticle, new List<History>());
-                        m_AddedHistories[SelectedArticle].Add(new History() { ActionType = EnumStockAction.Output, ArticleID = SelectedArticle.ID, Quantity = _Quantity, Balance = SelectedArticle.Quantity });
                         
                         if (SelectedArticle.GroupArticles.Count == 0)
                         {
@@ -348,10 +360,15 @@ namespace ManageStock.ViewModels
                                     SelectedArticle.Quantity -= _Quantity;
                                 }
                             }
+                            m_AddedHistories[SelectedArticle].Add(new History() { ActionType = EnumStockAction.Output, ArticleID = SelectedArticle.ID, Quantity = _Quantity, Balance = SelectedArticle.Quantity });
                         }
                         else
                         {
-                            
+                            m_AddedHistories[SelectedArticle].Add(new History() { ActionType = EnumStockAction.Output, ArticleID = SelectedArticle.ID, Quantity = _Quantity, Balance = SelectedArticle.Quantity });
+
+                            // just for make a changed (for undo/redo)
+                            CommandManager.AddCommand(new PropertyCommand(SelectedArticle, nameof(SelectedArticle.Quantity), SelectedArticle.Quantity, SelectedArticle.Quantity));
+
                             foreach (GroupArticle groupArticle in SelectedArticle.GroupArticles)
                             {
                                 groupArticle.Item.Quantity -= _Quantity * groupArticle.QuantityUse;
