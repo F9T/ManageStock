@@ -44,7 +44,9 @@ namespace Application.Common.Managers.DatabaseManager
             str.Append(" VALUES (");
             for (var index = 0; index < _Columns.Count; index++)
             {
-                str.Append($"{ParameterInsertChar}{_Columns[index].ColumnName}");
+                str.Append($"{ParameterInsertChar}");
+                if (ConnectorType != EnumDBConnectorType.SQLite)
+                    str.Append($"{_Columns[index].ColumnName}");
 
                 if (index + 1 < _Columns.Count)
                 {
