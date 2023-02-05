@@ -8,27 +8,9 @@ namespace Application.Common.Settings
 {
     public abstract class SettingsBase : INotifyPropertyChanged, ICloneable
     {
-        private string m_DatabasePath;
+        public abstract void Default();
 
-        public string DatabasePath
-        {
-            get => m_DatabasePath;
-            set
-            {
-                m_DatabasePath = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public virtual void Default()
-        {
-            m_DatabasePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ManageStock.db");
-        }
-
-        public virtual void CopyTo(SettingsBase _Settings)
-        {
-            m_DatabasePath = _Settings.DatabasePath;
-        }
+        public abstract void CopyTo(SettingsBase _Settings);
 
         public abstract object Clone();
 

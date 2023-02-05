@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -58,6 +59,11 @@
     <Compile Include="Converters\InvertBooleanConverter.cs" />
     <Compile Include="Converters\ArticleAssemblyTypeToBooleanConverter.cs" />
     <Compile Include="CustomWindow.cs" />
+    <Compile Include="DatabaseInformation\DatabaseCreator.cs" />
+    <Compile Include="DatabaseInformation\DatabaseInfoSerializer.cs" />
+    <Compile Include="DatabaseInformation\DatabaseInfoWindow.xaml.cs">
+      <DependentUpon>DatabaseInfoWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Helpers\TextBoxHelper.cs" />
     <Compile Include="AppBuilderBase.cs" />
@@ -124,6 +130,7 @@
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseInformation\DatabaseInfo.cs" />
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Settings\SettingsBase.cs" />
     <Compile Include="Settings\SettingsSerializer.cs" />
@@ -154,6 +161,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="DatabaseInformation\DatabaseInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PopupWindows\ConfirmationPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -214,5 +225,6 @@
       <Name>Application.CommandManager</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

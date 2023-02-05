@@ -68,7 +68,7 @@ namespace Application.Common.Managers.DatabaseManager.Connectors
 
             try
             {
-                string databaseString = $@"server=localhost;userid=root;password=;database=managestock";
+                string databaseString = $@"server=localhost;userid=root;password=;database={_ConnectionString}";
                 m_DbConnection = new MySqlConnection(databaseString);
                 m_DbConnection.Open();
 

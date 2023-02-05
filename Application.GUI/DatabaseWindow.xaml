@@ -1,0 +1,44 @@
+﻿<common:CustomWindow x:Class="Application.GUI.DatabaseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:common="clr-namespace:Application.Common;assembly=Application.Common"
+        xmlns:databaseInfo="clr-namespace:Application.Common.DatabaseInformation;assembly=Application.Common"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Stocks disponibles" Height="400" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Closed="CustomWindowClosed">
+
+    <Grid Width="425" HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="1" Text="Liste des stocks existants :" FontSize="18" Margin="0,10"/>
+        <materialDesign:Card Padding="10" Grid.Row="2">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl ItemsSource="{Binding Databases}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type databaseInfo:DatabaseInfo}">
+                            <Grid Width="470" Margin="0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Text="{Binding Name}" FontSize="18" Foreground="Teal"/>
+                                <Button Grid.Row="1" Tag="{Binding .}" Content="Ouvrir" FontSize="12" Width="100" Click="OpenDatabaseButtonOnClick" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </materialDesign:Card>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <Button Content="Quitter" FontSize="12" Width="100" Click="ExitButtonOnClick"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+            <Button Content="Nouveau" FontSize="12" Width="100" Click="NewDatabaseButtonOnClick"/>
+            <Button Content="Ajouter existant" FontSize="12" Width="100" Click="AddExistingDatabaseButtonOnClick" Margin="10,0,0,0"/>
+        </StackPanel>
+    </Grid>
+</common:CustomWindow>

@@ -1,5 +1,7 @@
-﻿using Application.Common.Logger;
+﻿using Application.Common.DatabaseInformation;
+using Application.Common.Logger;
 using Application.Common.Managers;
+using Application.Common.Managers.DatabaseManager;
 using Application.Common.Managers.DatabaseManagerBase;
 using Application.Common.Notifications;
 using Application.Common.PathConfiguration;
@@ -24,8 +26,11 @@ namespace Application.Common
 
         public abstract UserControl View { get; }
 
-        public virtual void Launch(object[] _Args = null)
+        public DatabaseInfo DatabaseInfo { get; set; }
+
+        public virtual void Launch(DatabaseInfo _DatabaseInfo, object[] _Args = null)
         {
+            DatabaseInfo = _DatabaseInfo;
             SettingsSerializer = new SettingsSerializer<Settings.Settings>();
 
             CustomNotificationsManager = new CustomNotificationsManager();
@@ -71,10 +76,10 @@ namespace Application.Common
 
         protected virtual void InitializeDatabase()
         {
-            PathManager.InstanceOf[EnumConfigurationPath.Database] = Settings.DatabasePath;
+            PathManager.InstanceOf[EnumConfigurationPath.Database] = DatabaseInfo.ConnectionString;
 
             // open database
-            m_DatabaseIsOpened = DBManager.InstanceOf.Open(Managers.DatabaseManager.EnumDBConnectorType.SQLite, Settings.DatabasePath);
+            m_DatabaseIsOpened = DBManager.InstanceOf.Open(DatabaseInfo.Type, DatabaseInfo.ConnectionString);
             if (!m_DatabaseIsOpened)
             {
                 ApplicationLogger.InstanceOf.Write("InitializeDatabase() : Impossible de se connecter à la base de données!");

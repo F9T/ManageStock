@@ -38,8 +38,6 @@
 
         public override void Default()
         {
-            base.Default();
-
             m_EnabledEmailNotifications = false;
             m_EmailNotifications = "info@hfmb.ch";
             m_EnabledNotifications = true;
@@ -47,8 +45,6 @@
 
         public override void CopyTo(SettingsBase _Settings)
         {
-            base.CopyTo(_Settings);
-
             if (_Settings is Settings settings)
             {
                 m_EnabledNotifications = settings.EnabledNotifications;

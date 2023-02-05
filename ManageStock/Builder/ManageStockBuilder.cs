@@ -1,6 +1,7 @@
 ﻿using Application.Backup;
 using Application.CommandManager;
 using Application.Common;
+using Application.Common.DatabaseInformation;
 using Application.Common.Managers.DatabaseManagerBase;
 using Application.Common.PathConfiguration;
 using Application.Common.Settings;
@@ -26,12 +27,12 @@ namespace ManageStock.Builder
 
         public override UserControl View => m_MainView;
 
-        public override void Launch(object[] _Args)
+        public override void Launch(DatabaseInfo _DatabaseInfo, object[] _Args)
         {
             m_MainView = new MainView();
             InitializePath();
 
-            base.Launch(_Args);
+            base.Launch(_DatabaseInfo, _Args);
 
             if (_Args.Length == 1)
             {
@@ -204,6 +205,7 @@ namespace ManageStock.Builder
             }
 
             m_MainView.CommandManager = commandManager;
+            m_MainView.SelectedView = articleViewModel;
         }
 
         private void ViewModelChangeViewRequest(object sender, ViewRequestEventArgs args)

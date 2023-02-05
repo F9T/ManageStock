@@ -8,20 +8,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <CheckBox Grid.Row="0" Content="Afficher les notifications" IsChecked="{Binding Settings.EnabledNotifications}"/>
 
-        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,30,0,0">
-            <TextBlock Text="Chemin de la base de données :"/>
-            <TextBlock Margin="20,15,0,0" TextTrimming="WordEllipsis" ToolTip="{Binding Settings.DatabasePath}">
-                <Hyperlink Foreground="DodgerBlue" Click="DatabasePathButtonOnClick">
-                    <Run Text="{Binding Settings.DatabasePath}"/>
-                </Hyperlink>
-            </TextBlock>
-        </StackPanel>
-
-        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,40,0,0">
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,20,0,0">
             <CheckBox Content="Recevoir mail automatique - Qté stock critique" IsChecked="{Binding Settings.EnabledEmailNotifications}"/>
             <StackPanel Orientation="Horizontal" Margin="20,15,0,0">
                 <TextBlock Text="Adresse mail : "/>
@@ -29,7 +19,7 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0" VerticalAlignment="Center">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0" VerticalAlignment="Center">
             <Button Content="Annuler" Width="100" Click="CancelButtonOnClick"/>
             <Button Content="Confirmer" Width="100" Click="ConfirmButtonOnClick" Margin="10,0,0,0"/>
         </StackPanel>

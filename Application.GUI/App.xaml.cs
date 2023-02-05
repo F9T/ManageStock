@@ -1,8 +1,16 @@
 ﻿using Application.Common;
+using Application.Common.DatabaseInformation;
 using Application.Common.Logger;
+using Application.Common.Managers;
+using Application.Common.Managers.DatabaseManager;
+using Application.Common.PathConfiguration;
+using Application.Common.Settings;
 using ManageStock.Builder;
 using OrderTracking;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
@@ -52,10 +60,28 @@ namespace Application.GUI
                     args.Add(arg);
                 }
             }
-            m_Launcher.Launch(args.ToArray());
-            m_MainWindow.View = m_Launcher.View;
 
-            m_MainWindow.Show();
+            // load available database
+            string path = PathManager.InstanceOf[EnumConfigurationPath.DatabaseInfo];
+            List<DatabaseInfo> databases = new List<DatabaseInfo>();
+
+            if (File.Exists(path))
+            {
+                DatabaseInfoSerializer.Load(path, out databases);
+            }
+            
+            DatabaseWindow window = new DatabaseWindow(databases);
+            if(window.ShowDialog() == true)
+            {
+                if(!DatabaseInfoSerializer.Save(path, window.Databases.ToList()))
+                {
+                    MessageBox.Show("Une erreur est survenue à la sauvegarde du stock. Veuillez redémarrer l'application.", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                m_Launcher.Launch(window.SelectedDatabaseInfo, args.ToArray());
+                m_MainWindow.View = m_Launcher.View;
+                m_MainWindow.Show();
+            }
         }
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

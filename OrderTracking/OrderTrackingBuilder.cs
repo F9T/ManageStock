@@ -1,4 +1,5 @@
 ﻿using Application.Common;
+using Application.Common.DatabaseInformation;
 using OrderTracking.Views;
 using System.Windows.Controls;
 
@@ -10,9 +11,9 @@ namespace OrderTracking
 
         public override UserControl View => m_MainView;
 
-        public override void Launch(object[] _Args = null)
+        public override void Launch(DatabaseInfo _DatabaseInfo, object[] _Args = null)
         {
-            base.Launch(_Args);
+            base.Launch(_DatabaseInfo, _Args);
 
             m_MainView = new ArticlesMainView();
             m_MainView.MainViewModel.Initialize(CustomNotificationsManager);

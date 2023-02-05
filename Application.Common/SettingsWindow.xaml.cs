@@ -29,31 +29,6 @@ namespace Application.Common
 
         public bool NeedRestart { get; private set; }
 
-        private void DatabasePathButtonOnClick(object sender, RoutedEventArgs e)
-        {
-            string initialDirectory = Path.GetDirectoryName(Settings.DatabasePath);
-            string fileName = Path.GetFileName(Settings.DatabasePath);
-
-            if (!Directory.Exists(initialDirectory))
-            {
-                initialDirectory = Environment.GetEnvironmentVariable("USERPROFILE");
-            }
-
-            OpenFileDialog dialog = new OpenFileDialog
-            {
-                InitialDirectory = initialDirectory,
-                FileName = fileName,
-                Filter = "Database files|*.db",
-                CheckFileExists = true
-            };
-
-            if (dialog.ShowDialog() == true)
-            {
-                Settings.DatabasePath = dialog.FileName;
-                NeedRestart = true;
-            }
-        }
-
         private void CancelButtonOnClick(object sender, RoutedEventArgs e)
         {
             m_ManualClosing = true;

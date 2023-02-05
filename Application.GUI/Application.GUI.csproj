@@ -38,6 +38,10 @@
   <PropertyGroup>
     <ApplicationIcon>AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <IncludeMaterialDesignFont>True</IncludeMaterialDesignFont>
+    <MaterialDesignFontDirectory>Resources\Roboto\</MaterialDesignFontDirectory>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\OrderTracking\libs\Antlr3.Runtime.dll</HintPath>
@@ -73,6 +77,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="DatabaseWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -80,6 +88,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DatabaseWindow.xaml.cs">
+      <DependentUpon>DatabaseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -121,9 +132,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="AppIcon.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Application.Common\Application.Common.csproj">
       <Project>{f9a3f964-3fb6-45dc-95ea-44ced524d0dd}</Project>
       <Name>Application.Common</Name>
@@ -140,5 +148,12 @@
   <ItemGroup>
     <Folder Include="Settings\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppIcon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir "$(TargetDir)Databases"
+copy "$(ProjectDir)Databases\empty.db" "$(TargetDir)Databases"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

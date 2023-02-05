@@ -4,6 +4,7 @@
     {
         Settings,
         Database,
+        DatabaseInfo,
         Logs,
         BackupDirectory
     }

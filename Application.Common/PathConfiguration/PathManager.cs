@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 
 namespace Application.Common.PathConfiguration
 {
@@ -16,6 +14,7 @@ namespace Application.Common.PathConfiguration
             {
                 {EnumConfigurationPath.Settings, @"%APPDATA%\ManageStock\settings.xml"},
                 {EnumConfigurationPath.Database, "ManageStock.db"},
+                {EnumConfigurationPath.DatabaseInfo, @"%APPDATA%\ManageStock\database_info.xml"},
                 {EnumConfigurationPath.Logs, @"%APPDATA%\ManageStock\app_trace.log"}
             };
         }
