@@ -35,7 +35,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Dirs]
 Name: "{userappdata}\ManageStock"
 
-[Files]                                                   
+[Files]                                                       
+Source: "..\Application.GUI\bin\Release\Databases\*"; DestDir: "{app}\Databases"; Flags: ignoreversion
 Source: "..\Application.GUI\bin\Release\Application.GUI.exe"; DestDir: "{app}"; DestName: "{#MyAppExeName}"; Flags: ignoreversion
 Source: "..\Application.GUI\bin\Release\Antlr3.Runtime.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Application.GUI\bin\Release\Application.Backup.dll"; DestDir: "{app}"; Flags: ignoreversion
