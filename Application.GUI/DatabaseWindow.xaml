@@ -20,13 +20,15 @@
                 <ItemsControl ItemsSource="{Binding Databases}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type databaseInfo:DatabaseInfo}">
-                            <Grid Width="470" Margin="0,5">
+                            <Grid Margin="0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="90"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Row="0" Text="{Binding Name}" FontSize="18" Foreground="Teal"/>
-                                <Button Grid.Row="1" Tag="{Binding .}" Content="Ouvrir" FontSize="12" Width="100" Click="OpenDatabaseButtonOnClick" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="0" Text="{Binding Name}" FontSize="18" Foreground="Teal"/>
+                                <Button Grid.Column="1" Tag="{Binding .}" Content="Ouvrir" FontSize="12" Click="OpenDatabaseButtonOnClick"/>
+                                <Button Grid.Column="2" Tag="{Binding .}" Content="Supprimer" FontSize="12" Click="DeleteDatabaseButtonOnClick" Margin="5,0,0,0"/>
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

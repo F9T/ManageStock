@@ -1,7 +1,10 @@
-﻿using Application.CommandManager;
+﻿using Application.Backup;
+using Application.CommandManager;
 using Application.CommandManager.Collection;
 using Application.CommandManager.Commands;
 using Application.Common;
+using Application.Common.DatabaseInformation;
+using Application.Common.Logger;
 using Application.Common.Managers;
 using Application.Common.Managers.DatabaseManagerBase;
 using Application.Common.Models;
@@ -79,6 +82,8 @@ namespace ManageStock.Views
         }
 
         public Settings Settings { get; set; }
+
+        public DatabaseInfo DatabaseInfo { get; set; }
 
         public CustomNotificationsManager NotificationManager { get; set; }
 
@@ -208,22 +213,45 @@ namespace ManageStock.Views
 
             if (dialogResult == true)
             {
-                bool result = m_SettingsSerializer.Save(PathManager.InstanceOf[EnumConfigurationPath.Settings], Settings);
-                if (Settings.EnabledNotifications)
+                if (window.PermanentDatabaseDelete)
                 {
-                    if (result)
-                    {
-                        NotificationManager.Show("Les paramètres ont été sauvegardés avec succès", NotificationType.Success);
-                    }
-                    else
-                    {
-                        NotificationManager.Show("Une erreur est survenue durant la sauvegarde des paramètres", NotificationType.Warning);
-                    }
-                }
+                    BackupManager.InstanceOf.Stop();
+                    DBManager.InstanceOf.Close();
 
-                if (window.NeedRestart)
+                    if (!DatabaseCreator.DeleteDatabase(DatabaseInfo))
+                    {
+                        MessageBox.Show("Impossible de supprimer le stock.", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                        ApplicationLogger.InstanceOf.Write($"Impossible de supprimer la base de donnée {DatabaseInfo?.ConnectionString}");
+                        System.Windows.Application.Current.Shutdown(0);
+                        return;
+                    }
+
+                    // clear backup
+                    BackupManager.InstanceOf.ClearAllBackup();
+
+                    MessageBox.Show("Le stock a bien été supprimé. Veuillez redémarrer l'application.", "", MessageBoxButton.OK, MessageBoxImage.Information);
+                    System.Windows.Application.Current.Shutdown(0);
+                    return;
+                }
+                else
                 {
-                    Restart();
+                    bool result = m_SettingsSerializer.Save(PathManager.InstanceOf[EnumConfigurationPath.Settings], Settings);
+                    if (Settings.EnabledNotifications)
+                    {
+                        if (result)
+                        {
+                            NotificationManager.Show("Les paramètres ont été sauvegardés avec succès", NotificationType.Success);
+                        }
+                        else
+                        {
+                            NotificationManager.Show("Une erreur est survenue durant la sauvegarde des paramètres", NotificationType.Warning);
+                        }
+                    }
+
+                    if (window.NeedRestart)
+                    {
+                        Restart();
+                    }
                 }
             }
         }
@@ -265,7 +293,7 @@ namespace ManageStock.Views
 
         private void RedoButtonClick(object sender, RoutedEventArgs e)
         {
-            ConfirmationPopup popup = new ConfirmationPopup("Êtes-vous sûr de vouloir annuler la dernière action ?");
+            ConfirmationPopup popup = new ConfirmationPopup("Êtes-vous sûr de vouloir refaire la dernière action ?");
             popup.Owner = System.Windows.Application.Current.MainWindow;
             if (popup.ShowDialog() == true)
             {

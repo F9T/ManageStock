@@ -19,6 +19,13 @@
             </StackPanel>
         </StackPanel>
 
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,30,0,0" VerticalAlignment="Center">
+            <TextBlock>
+                <Hyperlink Foreground="Red" Click="DeleteDatabaseOnClick">
+                    <Run Text="Supprimer définitivement cette base de donnée" Foreground="Red" FontSize="10"/>
+                </Hyperlink>
+            </TextBlock>
+        </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0" VerticalAlignment="Center">
             <Button Content="Annuler" Width="100" Click="CancelButtonOnClick"/>
             <Button Content="Confirmer" Width="100" Click="ConfirmButtonOnClick" Margin="10,0,0,0"/>

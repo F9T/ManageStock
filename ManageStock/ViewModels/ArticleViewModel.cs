@@ -320,6 +320,15 @@ namespace ManageStock.ViewModels
                     break;
                 case EnumArticleAssemblyType.ProductAtTheOutput:
                     {
+                        if (SelectedArticle.GroupArticles.Count > 0)
+                        {
+                            if (SelectedArticle.Quantity < _Quantity)
+                            {
+                                NotifyWarning("Il n'y a pas assez d'articles.");
+                                return false;
+                            }
+                        }
+
                         if (SelectedArticle.GroupArticles.Any(_GroupArticle => _GroupArticle.Item.Quantity - (_Quantity * _GroupArticle.QuantityUse) < 0))
                         {
                             NotifyWarning("Il n'y a pas assez de sous-articles.");
@@ -364,10 +373,8 @@ namespace ManageStock.ViewModels
                         }
                         else
                         {
+                            SelectedArticle.Quantity -= _Quantity;
                             m_AddedHistories[SelectedArticle].Add(new History() { ActionType = EnumStockAction.Output, ArticleID = SelectedArticle.ID, Quantity = _Quantity, Balance = SelectedArticle.Quantity });
-
-                            // just for make a changed (for undo/redo)
-                            CommandManager.AddCommand(new PropertyCommand(SelectedArticle, nameof(SelectedArticle.Quantity), SelectedArticle.Quantity, SelectedArticle.Quantity));
 
                             foreach (GroupArticle groupArticle in SelectedArticle.GroupArticles)
                             {

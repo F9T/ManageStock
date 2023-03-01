@@ -7,6 +7,7 @@ using Application.Common.PathConfiguration;
 using Application.Common.Settings;
 using ManageStock.Builder;
 using OrderTracking;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
@@ -69,15 +70,39 @@ namespace Application.GUI
             {
                 DatabaseInfoSerializer.Load(path, out databases);
             }
+
+            // remove not existing database
+            for(int i = 0; i<databases.Count;)
+            {
+                DatabaseInfo database = databases[i];
+                if(database != null && !DatabaseCreator.IsDatabaseExists(database))
+                {
+                    databases.Remove(database);
+                }
+                else
+                {
+                    i++;
+                }
+            }
             
             DatabaseWindow window = new DatabaseWindow(databases);
-            if(window.ShowDialog() == true)
-            {
-                if(!DatabaseInfoSerializer.Save(path, window.Databases.ToList()))
-                {
-                    MessageBox.Show("Une erreur est survenue à la sauvegarde du stock. Veuillez redémarrer l'application.", "", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
 
+            bool? result = window.ShowDialog();
+
+            if (!DatabaseInfoSerializer.Save(path, window.Databases.ToList()))
+            {
+                MessageBox.Show("Une erreur est survenue à la sauvegarde du stock. Veuillez redémarrer l'application.", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (window.Exited)
+            {
+                Current.Shutdown(0);
+                return;
+            }
+
+            if (result == true)
+            {
                 m_Launcher.Launch(window.SelectedDatabaseInfo, args.ToArray());
                 m_MainWindow.View = m_Launcher.View;
                 m_MainWindow.Show();
@@ -96,6 +121,7 @@ namespace Application.GUI
         {
             DispatcherUnhandledException -= App_DispatcherUnhandledException;
             m_Launcher.Shutdown(e.ApplicationExitCode);
+            Environment.Exit(e.ApplicationExitCode);
         }
     }
 }

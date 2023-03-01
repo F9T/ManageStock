@@ -1,7 +1,9 @@
-﻿using Application.Common.Settings;
+﻿using Application.Common.PopupWindows;
+using Application.Common.Settings;
 using Microsoft.Win32;
 using System;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.IO;
 using System.Windows;
 
@@ -18,6 +20,7 @@ namespace Application.Common
         public SettingsWindow(Settings.Settings _Settings)
         {
             NeedRestart = false;
+            PermanentDatabaseDelete = false;
             m_SaveSettings = (Settings.Settings)_Settings.Clone();
             Settings = _Settings;
 
@@ -28,6 +31,8 @@ namespace Application.Common
         public Settings.Settings Settings { get; set; }
 
         public bool NeedRestart { get; private set; }
+
+        public bool PermanentDatabaseDelete { get;private set; }
 
         private void CancelButtonOnClick(object sender, RoutedEventArgs e)
         {
@@ -48,6 +53,19 @@ namespace Application.Common
             {
                 Settings.CopyTo(m_SaveSettings);
                 DialogResult = false;
+            }
+        }
+
+        private void DeleteDatabaseOnClick(object sender, RoutedEventArgs e)
+        {
+            ConfirmationPopup popup = new ConfirmationPopup("Êtes-vous sûr de vouloir supprimer ce stock ? Cela entraînera la perte de toutes vos données.");
+            popup.Owner = this;
+            popup.ShowDialog();
+            if (popup.Result == EnumPopupResult.Yes)
+            {
+                PermanentDatabaseDelete = true;
+                m_ManualClosing = true;
+                DialogResult = true;
             }
         }
     }

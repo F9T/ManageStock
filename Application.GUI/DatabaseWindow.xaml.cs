@@ -1,5 +1,6 @@
 ﻿using Application.Common;
 using Application.Common.DatabaseInformation;
+using Application.Common.PopupWindows;
 using MaterialDesignExtensions.Controls;
 using Microsoft.Win32;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace Application.GUI
         {
             InitializeComponent();
 
+            Exited = false;
             Databases = new ObservableCollection<DatabaseInfo>(_Databases);
             m_ManuallyClosed = false;
 
@@ -29,6 +31,8 @@ namespace Application.GUI
         public ObservableCollection<DatabaseInfo> Databases { get; set; }
 
         public DatabaseInfo SelectedDatabaseInfo { get; private set; }
+
+        public bool Exited { get; private set; }
 
         private void OpenDatabaseButtonOnClick(object sender, RoutedEventArgs e)
         {
@@ -44,6 +48,26 @@ namespace Application.GUI
                 }
             }
         }
+
+        private void DeleteDatabaseButtonOnClick(object sender, RoutedEventArgs e)
+        {
+            var element = sender as FrameworkElement;
+            if (element != null)
+            {
+                var database = element.Tag as DatabaseInfo;
+                if (database != null)
+                {
+                    ConfirmationPopup popup = new ConfirmationPopup("Êtes-vous sûr de vouloir supprimer ce stock de votre liste ?");
+                    popup.Owner = this;
+                    popup.ShowDialog();
+                    if(popup.Result == EnumPopupResult.Yes)
+                    {
+                        Databases.Remove(database);
+                    }
+                }
+            }
+        }
+        
 
         private void AddExistingDatabaseButtonOnClick(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -67,7 +91,8 @@ namespace Application.GUI
         private void ExitButtonOnClick(object sender, System.Windows.RoutedEventArgs e)
         {
             m_ManuallyClosed = true;
-            System.Windows.Application.Current.Shutdown(0);
+            Exited = true;
+            DialogResult = true;
         }
 
         private void NewDatabaseButtonOnClick(object sender, System.Windows.RoutedEventArgs e)
@@ -87,7 +112,7 @@ namespace Application.GUI
                 }
                 else
                 {
-                    MessageBox.Show("Une erreur est survenue à la création du stock. Veuillez ressayer.", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Une erreur est survenue à la création du stock. Veuillez vérifier que la base de donnée n'existe pas déjà au chemin spécifié.", "", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -99,7 +124,7 @@ namespace Application.GUI
                 return;
             }
 
-            System.Windows.Application.Current.Shutdown(0);
+            Exited = true;
         }
     }
 }

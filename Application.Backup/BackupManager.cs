@@ -23,6 +23,29 @@ namespace Application.Backup
 
         public static BackupManager InstanceOf => s_InstanceOf ?? (s_InstanceOf = new BackupManager());
 
+        public void ClearAllBackup()
+        {
+            lock (m_Lock)
+            {
+                foreach (Backup backup in m_Backup)
+                {
+                    DirectoryInfo backupDirectory = new DirectoryInfo(backup.BackupInfo.BackupDirectory);
+                    var backupFiles = backupDirectory.GetFiles($"{backup.FileNameWithoutExt}_*.bak", SearchOption.TopDirectoryOnly);
+                    foreach(var file in backupFiles)
+                    {
+                        try
+                        {
+                            File.Delete(file.FullName);
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                    }
+                }
+            }
+        }
+
         public void AddBackup(string _FilePath, BackupInfo _BackupInfo)
         {
             Backup backup = new Backup
@@ -77,7 +100,7 @@ namespace Application.Backup
                                     backupDirectory.Create();
                                 }
 
-                                var backupFiles = backupDirectory.GetFiles("*.bak", SearchOption.TopDirectoryOnly).OrderBy(_ => _.LastWriteTime);
+                                var backupFiles = backupDirectory.GetFiles($"{backup.FileNameWithoutExt}_*.bak", SearchOption.TopDirectoryOnly).OrderBy(_ => _.LastWriteTime);
 
                                 if (backupFiles.Count() == backup.BackupInfo.MaximumBackup)
                                 {

@@ -29,7 +29,10 @@ namespace ManageStock.Builder
 
         public override void Launch(DatabaseInfo _DatabaseInfo, object[] _Args)
         {
-            m_MainView = new MainView();
+            m_MainView = new MainView
+            {
+                DatabaseInfo = _DatabaseInfo
+            };
             InitializePath();
 
             base.Launch(_DatabaseInfo, _Args);
