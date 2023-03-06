@@ -256,7 +256,12 @@ namespace ManageStock.ViewModels
                         CommandManager.EndGroup();
 
                         DataManager.HistoryManager.InsertAll(m_AddedHistories.Values.SelectMany(_ => _).ToList());
-                        DataManager.Execute(EnumDatabaseAction.Update, SelectedArticle);
+
+                        // update all articles
+                        foreach(Article article in m_AddedHistories.Keys)
+                        {
+                            DataManager.Execute(EnumDatabaseAction.Update, article);
+                        }
                     }
                 }
 
@@ -355,36 +360,18 @@ namespace ManageStock.ViewModels
                     {
                         // output
                         m_AddedHistories.Add(SelectedArticle, new List<History>());
-                        
-                        if (SelectedArticle.GroupArticles.Count == 0)
-                        {
-                            if(SelectedArticle.Quantity > 0)
-                            {
-                                if(SelectedArticle.Quantity - _Quantity < 0)
-                                {
-                                    SelectedArticle.Quantity = 0;
-                                }
-                                else
-                                {
-                                    SelectedArticle.Quantity -= _Quantity;
-                                }
-                            }
-                            m_AddedHistories[SelectedArticle].Add(new History() { ActionType = EnumStockAction.Output, ArticleID = SelectedArticle.ID, Quantity = _Quantity, Balance = SelectedArticle.Quantity });
-                        }
-                        else
-                        {
-                            SelectedArticle.Quantity -= _Quantity;
-                            m_AddedHistories[SelectedArticle].Add(new History() { ActionType = EnumStockAction.Output, ArticleID = SelectedArticle.ID, Quantity = _Quantity, Balance = SelectedArticle.Quantity });
 
-                            foreach (GroupArticle groupArticle in SelectedArticle.GroupArticles)
+                        SelectedArticle.Quantity -= _Quantity;
+                        m_AddedHistories[SelectedArticle].Add(new History() { ActionType = EnumStockAction.Output, ArticleID = SelectedArticle.ID, Quantity = _Quantity, Balance = SelectedArticle.Quantity });
+
+                        foreach (GroupArticle groupArticle in SelectedArticle.GroupArticles)
+                        {
+                            groupArticle.Item.Quantity -= _Quantity * groupArticle.QuantityUse;
+                            if (!m_AddedHistories.ContainsKey(groupArticle.Item))
                             {
-                                groupArticle.Item.Quantity -= _Quantity * groupArticle.QuantityUse;
-                                if (!m_AddedHistories.ContainsKey(groupArticle.Item))
-                                {
-                                    m_AddedHistories.Add(groupArticle.Item, new List<History>());
-                                }
-                                m_AddedHistories[groupArticle.Item].Add(new History() { ActionType = EnumStockAction.Output, ArticleID = groupArticle.ArticleId, Quantity = _Quantity * groupArticle.QuantityUse, Balance = groupArticle.Item.Quantity });
+                                m_AddedHistories.Add(groupArticle.Item, new List<History>());
                             }
+                            m_AddedHistories[groupArticle.Item].Add(new History() { ActionType = EnumStockAction.Output, ArticleID = groupArticle.ArticleId, Quantity = _Quantity * groupArticle.QuantityUse, Balance = groupArticle.Item.Quantity });
                         }
                     }
                     break;
