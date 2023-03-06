@@ -19,7 +19,7 @@ namespace ManageStock.Converters
             {
                 if(history.ActionType == actionType)
                 {
-                    return history.Quantity;
+                    return history.Quantity.ToString("0.00", CultureInfo.InvariantCulture);
                 }
 
                 return "";

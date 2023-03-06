@@ -138,6 +138,16 @@
         </StackPanel>
 
         <DataGrid Grid.Row="2" ItemsSource="{Binding HistoryCollection}" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserSortColumns="False" IsReadOnly="True">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ActionType}" Value="Correction">
+                            <Setter Property="Background" Value="#f0e68c"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                    <Setter Property="Background" Value="Transparent"/>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Date" Width="200">
                     <DataGridTemplateColumn.CellTemplate>
@@ -146,38 +156,38 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Production" Width="250">
+                <DataGridTemplateColumn Header="Production" Width="200">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding ., Converter={StaticResource HistoryTypeQuantityConverter}, ConverterParameter=Production}" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Restockage" Width="250">
+                <DataGridTemplateColumn Header="Restockage" Width="200">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding ., Converter={StaticResource HistoryTypeQuantityConverter}, ConverterParameter=Resupply}" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Entrée" Width="250">
+                <DataGridTemplateColumn Header="Entrée" Width="200">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding ., Converter={StaticResource HistoryTypeQuantityConverter}, ConverterParameter=Input}" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Sortie" Width="250">
+                <DataGridTemplateColumn Header="Sortie" Width="200">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding ., Converter={StaticResource HistoryTypeQuantityConverter}, ConverterParameter=Output}" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Restant" Width="250">
+                <DataGridTemplateColumn Header="Restant" Width="200">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Balance}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding Balance,StringFormat=0.00}" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

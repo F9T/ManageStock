@@ -26,6 +26,10 @@ namespace ManageStock.Converters
                         return "Entrée";
                     case EnumStockAction.Output:
                         return "Sortie";
+                    case EnumStockAction.Correction:
+                        return "Correction";
+                    default:
+                        return actionType.ToString();
                 }
             }
 

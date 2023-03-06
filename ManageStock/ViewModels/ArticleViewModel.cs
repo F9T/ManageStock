@@ -22,6 +22,7 @@ using ManageStock.Views.Articles.Providers;
 using ManageStock.Views.Articles.Stock;
 using ManageStock.Views.Articles.SubArticles;
 using Microsoft.Win32;
+using Notification.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -475,6 +476,7 @@ namespace ManageStock.ViewModels
 
             if (window.ShowDialog() == true)
             {
+                bool quantityIsEquals = Math.Abs(_Article.Quantity - window.Article.Quantity) < 0.0001;
                 CommandManager.Resume();
                 CommandManager.BeginGroup();
                 _Article.CopyTo(window.Article);
@@ -483,6 +485,16 @@ namespace ManageStock.ViewModels
                 {
                     SelectedArticle = _Article;
                 }
+
+                if (!quantityIsEquals)
+                {
+                    m_NotificationManager.SuspendNotification();
+                    var history = new History { Date = DateTime.Now, ActionType = EnumStockAction.Correction, ArticleID = SelectedArticle.ID, Quantity = SelectedArticle.Quantity, Balance = SelectedArticle.Quantity };
+                    SelectedArticle.History.Add(history);
+                    DataManager.Execute(EnumDatabaseAction.Insert, history);
+                    m_NotificationManager.ResumeNotification();
+                }
+
             }
             CommandManager.Resume();
         }

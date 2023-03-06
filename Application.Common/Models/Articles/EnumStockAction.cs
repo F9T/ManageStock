@@ -5,6 +5,7 @@
         Production,
         Resupply,
         Input,
-        Output
+        Output,
+        Correction,
     }
 }
